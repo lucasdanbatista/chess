@@ -30,22 +30,25 @@ class _ChessViewState extends State<ChessView> {
       builder: (context, appModel, child) {
         if (appModel.promotionRequested) {
           appModel.promotionRequested = false;
-          WidgetsBinding.instance
-              .addPostFrameCallback((_) => _showPromotionDialog(appModel));
+          WidgetsBinding.instance.addPostFrameCallback((_) => _showPromotionDialog(appModel));
         }
         return WillPopScope(
           onWillPop: _willPopCallback,
           child: Container(
             decoration: BoxDecoration(gradient: appModel.theme.background),
-            padding: EdgeInsets.all(30),
             child: Column(
               children: [
                 Spacer(),
                 ChessBoardWidget(appModel),
                 SizedBox(height: 30),
-                GameStatus(),
-                Spacer(),
-                GameInfoAndControls(appModel),
+                Padding(
+                  padding: EdgeInsets.all(30),
+                  child: GameStatus(),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(30),
+                  child: GameInfoAndControls(appModel),
+                ),
                 BottomPadding(),
               ],
             ),
