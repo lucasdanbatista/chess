@@ -30,7 +30,7 @@ class ChessGame extends Game with TapDetector {
   Move? latestMove;
 
   ChessGame(this.appModel, this.context) {
-    width = MediaQuery.of(context).size.width - 68;
+    width = MediaQuery.of(context).size.width;
     tileSize = (width ?? 0) / 8;
     for (var piece in board.player1Pieces + board.player2Pieces) {
       spriteMap[piece] = ChessPieceSprite(piece, appModel.pieceTheme);
@@ -112,8 +112,7 @@ class ChessGame extends Game with TapDetector {
   void _movePiece(int tile) {
     if (validMoves.contains(tile)) {
       validMoves = [];
-      var meta =
-          push(Move(selectedPiece?.tile ?? 0, tile), board, getMeta: true);
+      var meta = push(Move(selectedPiece?.tile ?? 0, tile), board, getMeta: true);
       if (meta.promotion) {
         appModel.requestPromotion();
       }
@@ -180,8 +179,7 @@ class ChessGame extends Game with TapDetector {
   }
 
   void redoMove() {
-    _moveCompletion(pushMSO(board.redoStack.removeLast(), board),
-        clearRedo: false);
+    _moveCompletion(pushMSO(board.redoStack.removeLast(), board), clearRedo: false);
   }
 
   void redoTwoMoves() {
@@ -242,14 +240,11 @@ class ChessGame extends Game with TapDetector {
   }
 
   int _vector2ToTile(Vector2 vector2) {
-    if (appModel.flip &&
-        appModel.playingWithAI &&
-        appModel.playerSide == Player.player2) {
+    if (appModel.flip && appModel.playingWithAI && appModel.playerSide == Player.player2) {
       return (7 - (vector2.y / (tileSize ?? 0)).floor()) * 8 +
           (7 - (vector2.x / (tileSize ?? 0)).floor());
     } else {
-      return (vector2.y / (tileSize ?? 0)).floor() * 8 +
-          (vector2.x / (tileSize ?? 0)).floor();
+      return (vector2.y / (tileSize ?? 0)).floor() * 8 + (vector2.x / (tileSize ?? 0)).floor();
     }
   }
 

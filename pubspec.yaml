@@ -101,4 +101,5 @@ flutter:
     - assets/images/pieces/videochess/
     - assets/images/pieces/lewischessmen/
     - assets/images/pieces/mexicocity/
+    - assets/images/pieces/neowood/
     - assets/audio/piece_moved.mp3
