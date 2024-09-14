@@ -5,26 +5,26 @@ class RoundedButton extends StatelessWidget {
   final String label;
   final Function() onPressed;
 
-  RoundedButton(this.label, {required this.onPressed});
+  const RoundedButton(this.label, {super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
+      width: double.infinity,
+      height: 60,
       child: CupertinoButton(
         padding: EdgeInsets.zero,
-        color: Color(0x20000000),
+        color: const Color(0x20000000),
+        borderRadius: const BorderRadius.all(Radius.circular(15)),
+        onPressed: onPressed,
         child: Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 24,
           ),
         ),
-        borderRadius: BorderRadius.all(Radius.circular(15)),
-        onPressed: onPressed,
       ),
-      width: double.infinity,
-      height: 60,
     );
   }
 }

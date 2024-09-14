@@ -5,7 +5,7 @@ class TimeLimitPicker extends StatelessWidget {
   final int? selectedTime;
   final Function(int?)? setTime;
 
-  TimeLimitPicker({this.selectedTime, this.setTime});
+  const TimeLimitPicker({super.key, this.selectedTime, this.setTime});
 
   final Map<int, Text> timeOptions = const <int, Text>{
     0: Text('None'),
@@ -13,7 +13,7 @@ class TimeLimitPicker extends StatelessWidget {
     30: Text('30m'),
     60: Text('1h'),
     90: Text('1.5h'),
-    120: Text('2h')
+    120: Text('2h'),
   };
 
   @override

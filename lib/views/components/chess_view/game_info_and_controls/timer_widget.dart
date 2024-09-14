@@ -5,20 +5,20 @@ class TimerWidget extends StatelessWidget {
   final Duration timeLeft;
   final Color color;
 
-  TimerWidget({required this.timeLeft, required this.color});
+  const TimerWidget({super.key, required this.timeLeft, required this.color});
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
         height: 60,
-        child: Center(
-          child: TextRegular(_durationToString(timeLeft)),
-        ),
         decoration: BoxDecoration(
           border: Border.all(color: color, width: 2),
           borderRadius: BorderRadius.circular(14),
-          color: Color(0x20000000),
+          color: const Color(0x20000000),
+        ),
+        child: Center(
+          child: TextRegular(_durationToString(timeLeft)),
         ),
       ),
     );
@@ -39,7 +39,7 @@ class TimerWidget extends StatelessWidget {
       return '$minutes:$seconds';
     } else {
       String seconds = duration.inSeconds.toString();
-      return '$seconds';
+      return seconds;
     }
   }
 }

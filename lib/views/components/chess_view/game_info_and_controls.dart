@@ -1,15 +1,15 @@
-import 'package:en_passant/model/app_model.dart';
+import 'package:en_passant/game/app_model.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'game_info_and_controls/moves_undo_redo_row.dart';
-import 'game_info_and_controls/restart_exit_buttons.dart';
-import 'game_info_and_controls/timers.dart';
+import 'package:en_passant/views/components/chess_view/game_info_and_controls/moves_undo_redo_row.dart';
+import 'package:en_passant/views/components/chess_view/game_info_and_controls/restart_exit_buttons.dart';
+import 'package:en_passant/views/components/chess_view/game_info_and_controls/timers.dart';
 
 class GameInfoAndControls extends StatelessWidget {
   final AppModel appModel;
   final ScrollController scrollController = ScrollController();
 
-  GameInfoAndControls(this.appModel);
+  GameInfoAndControls(this.appModel, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class GameInfoAndControls extends StatelessWidget {
       ),
       child: ListView(
         controller: scrollController,
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         shrinkWrap: true,
         padding: EdgeInsets.zero,
         children: [

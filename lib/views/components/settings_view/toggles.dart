@@ -1,14 +1,14 @@
 import 'dart:io';
 
-import 'package:en_passant/model/app_model.dart';
+import 'package:en_passant/game/app_model.dart';
 import 'package:flutter/material.dart';
 
-import 'toggle.dart';
+import 'package:en_passant/views/components/settings_view/toggle.dart';
 
 class Toggles extends StatelessWidget {
   final AppModel appModel;
 
-  Toggles(this.appModel);
+  const Toggles(this.appModel, {super.key});
 
   @override
   Widget build(BuildContext context) {

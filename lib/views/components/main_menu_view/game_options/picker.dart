@@ -1,6 +1,5 @@
+import 'package:en_passant/views/components/shared/text_variable.dart';
 import 'package:flutter/cupertino.dart';
-
-import '../../shared/text_variable.dart';
 
 class Picker<T> extends StatelessWidget {
   final String? label;
@@ -8,17 +7,24 @@ class Picker<T> extends StatelessWidget {
   final T? selection;
   final Function(T?)? setFunc;
 
-  Picker({this.label, this.options, this.selection, this.setFunc});
+  const Picker({
+    super.key,
+    this.label,
+    this.options,
+    this.selection,
+    this.setFunc,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TextSmall(label ?? ""),
-        SizedBox(height: 10),
-        Container(
+        TextSmall(label ?? ''),
+        const SizedBox(height: 10),
+        SizedBox(
+          width: double.infinity,
           child: CupertinoTheme(
-            data: CupertinoThemeData(
+            data: const CupertinoThemeData(
               textTheme: CupertinoTextThemeData(
                 textStyle: TextStyle(fontFamily: 'Jura', fontSize: 8),
               ),
@@ -31,12 +37,11 @@ class Picker<T> extends StatelessWidget {
                   setFunc!(val);
                 }
               },
-              thumbColor: Color(0x88FFFFFF),
-              backgroundColor: Color(0x20000000),
+              thumbColor: const Color(0x88FFFFFF),
+              backgroundColor: const Color(0x20000000),
             ),
           ),
-          width: double.infinity,
-        )
+        ),
       ],
     );
   }

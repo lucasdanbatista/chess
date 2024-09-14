@@ -1,11 +1,11 @@
-import 'package:en_passant/model/app_model.dart';
+import 'package:en_passant/game/app_model.dart';
 import 'package:en_passant/views/components/chess_view/game_info_and_controls/rounded_alert_button.dart';
 import 'package:flutter/cupertino.dart';
 
 class RestartExitButtons extends StatelessWidget {
   final AppModel appModel;
 
-  RestartExitButtons(this.appModel);
+  const RestartExitButtons(this.appModel, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class RestartExitButtons extends StatelessWidget {
             },
           ),
         ),
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         Expanded(
           child: RoundedAlertButton(
             'Exit',

@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:en_passant/logic/shared_functions.dart';
-import 'package:en_passant/model/app_model.dart';
+import 'package:en_passant/game/app_model.dart';
+import 'package:en_passant/game/chess_theme.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/sprite.dart';
@@ -12,16 +12,16 @@ class PiecePreview extends Game {
 
   Map<int, String> get imageMap {
     return {
-      0: 'pieces/${formatPieceTheme(appModel.pieceTheme)}/king_black.png',
-      1: 'pieces/${formatPieceTheme(appModel.pieceTheme)}/queen_white.png',
-      2: 'pieces/${formatPieceTheme(appModel.pieceTheme)}/rook_white.png',
-      3: 'pieces/${formatPieceTheme(appModel.pieceTheme)}/bishop_black.png',
-      4: 'pieces/${formatPieceTheme(appModel.pieceTheme)}/knight_black.png',
-      5: 'pieces/${formatPieceTheme(appModel.pieceTheme)}/pawn_white.png',
+      0: 'pieces/${ChessTheme.formatPieceTheme(appModel.pieceTheme)}/king_black.png',
+      1: 'pieces/${ChessTheme.formatPieceTheme(appModel.pieceTheme)}/queen_white.png',
+      2: 'pieces/${ChessTheme.formatPieceTheme(appModel.pieceTheme)}/rook_white.png',
+      3: 'pieces/${ChessTheme.formatPieceTheme(appModel.pieceTheme)}/bishop_black.png',
+      4: 'pieces/${ChessTheme.formatPieceTheme(appModel.pieceTheme)}/knight_black.png',
+      5: 'pieces/${ChessTheme.formatPieceTheme(appModel.pieceTheme)}/pawn_white.png',
     };
   }
 
-  Map<int, Sprite> spriteMap = Map();
+  Map<int, Sprite> spriteMap = {};
   bool rendered = false;
 
   PiecePreview(this.appModel) {
@@ -30,7 +30,7 @@ class PiecePreview extends Game {
 
   loadSpriteImages() async {
     for (var index = 0; index < 6; index++) {
-      spriteMap[index] = Sprite(await Flame.images.load(imageMap[index] ?? ""));
+      spriteMap[index] = Sprite(await Flame.images.load(imageMap[index] ?? ''));
     }
   }
 
@@ -56,5 +56,5 @@ class PiecePreview extends Game {
   }
 
   @override
-  void update(double t) {}
+  void update(double dt) {}
 }

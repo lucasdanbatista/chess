@@ -1,31 +1,25 @@
-import 'dart:async';
-
-import 'package:en_passant/model/app_model.dart';
+import 'package:en_passant/game/app_model.dart';
 import 'package:en_passant/views/components/chess_view/chess_board_widget.dart';
 import 'package:en_passant/views/components/chess_view/game_info_and_controls.dart';
 import 'package:en_passant/views/components/chess_view/promotion_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
-import 'components/chess_view/game_info_and_controls/game_status.dart';
-import 'components/shared/bottom_padding.dart';
+import 'package:en_passant/views/components/chess_view/game_info_and_controls/game_status.dart';
+import 'package:en_passant/views/components/shared/bottom_padding.dart';
 
 class ChessView extends StatefulWidget {
   final AppModel appModel;
 
-  ChessView(this.appModel);
+  const ChessView(this.appModel, {super.key});
 
   @override
-  _ChessViewState createState() => _ChessViewState(appModel);
+  State<StatefulWidget> createState() => _ChessViewState();
 }
 
 class _ChessViewState extends State<ChessView> {
-  AppModel appModel;
-
-  _ChessViewState(this.appModel);
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return Consumer<AppModel>(
       builder: (context, appModel, child) {
         if (appModel.promotionRequested) {
@@ -33,20 +27,25 @@ class _ChessViewState extends State<ChessView> {
           WidgetsBinding.instance
               .addPostFrameCallback((_) => _showPromotionDialog(appModel));
         }
-        return WillPopScope(
-          onWillPop: _willPopCallback,
+        return PopScope(
+          canPop: false,
+          onPopInvoked: (_) {},
           child: Container(
             decoration: BoxDecoration(gradient: appModel.theme.background),
-            padding: EdgeInsets.all(30),
             child: Column(
               children: [
-                Spacer(),
+                const Spacer(),
                 ChessBoardWidget(appModel),
-                SizedBox(height: 30),
-                GameStatus(),
-                Spacer(),
-                GameInfoAndControls(appModel),
-                BottomPadding(),
+                const SizedBox(height: 30),
+                const Padding(
+                  padding: EdgeInsets.all(30),
+                  child: GameStatus(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(30),
+                  child: GameInfoAndControls(appModel),
+                ),
+                const BottomPadding(),
               ],
             ),
           ),
@@ -62,10 +61,5 @@ class _ChessViewState extends State<ChessView> {
         return PromotionDialog(appModel);
       },
     );
-  }
-
-  Future<bool> _willPopCallback() async {
-    appModel.exitChessView();
-    return true;
   }
 }

@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1063904952978",
+    "firebase_url": "https://caffeinestudio-chess-default-rtdb.firebaseio.com",
+    "project_id": "caffeinestudio-chess",
+    "storage_bucket": "caffeinestudio-chess.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1063904952978:android:7106b88d339adfb54e9c4b",
+        "android_client_info": {
+          "package_name": "br.com.caffeinestudio.chess"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkHHpl-IlHOVC2ZNnJmReikcwxcipRI7g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
