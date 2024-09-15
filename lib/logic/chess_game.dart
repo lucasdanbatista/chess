@@ -254,6 +254,7 @@ class ChessGame extends Game with TapDetector {
         if (meta.promotion) {
           promote(event.move!.promotionType);
         }
+        appModel.changeTurn();
       }
     });
   }

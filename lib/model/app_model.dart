@@ -7,6 +7,7 @@ import 'package:en_passant/logic/shared_functions.dart';
 import 'package:en_passant/views/components/main_menu_view/game_options/side_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 
 import 'app_themes.dart';
 
