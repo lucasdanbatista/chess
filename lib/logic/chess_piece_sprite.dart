@@ -67,7 +67,7 @@ class ChessPieceSprite {
     if ((destX - (spriteX ?? 0)).abs() <= 0.1 &&
         (destY - (spriteY ?? 0)).abs() <= 0.1) {
       if (appModel.soundEnabled) {
-        FlameAudio.play('audio/piece_moved.mp3');
+        FlameAudio.play('piece_moved.mp3');
       }
     }
   }
