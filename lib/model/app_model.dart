@@ -23,6 +23,7 @@ const PIECE_THEMES = [
 ];
 
 class AppModel extends ChangeNotifier {
+  String sessionId = '1';
   int playerCount = 1;
   int aiDifficulty = 3;
   Player selectedSide = Player.player1;

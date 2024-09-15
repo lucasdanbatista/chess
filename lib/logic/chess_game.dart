@@ -6,6 +6,7 @@ import 'package:en_passant/logic/move_calculation/move_classes/move_meta.dart';
 import 'package:en_passant/logic/shared_functions.dart';
 import 'package:en_passant/model/app_model.dart';
 import 'package:en_passant/views/components/main_menu_view/game_options/side_picker.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,6 +40,7 @@ class ChessGame extends Game with TapDetector {
     if (appModel.isAIsTurn) {
       _aiMove();
     }
+    _listenPlayer2Move();
   }
 
   @override
@@ -112,7 +114,8 @@ class ChessGame extends Game with TapDetector {
   void _movePiece(int tile) {
     if (validMoves.contains(tile)) {
       validMoves = [];
-      var meta = push(Move(selectedPiece?.tile ?? 0, tile), board, getMeta: true);
+      var meta =
+          push(Move(selectedPiece?.tile ?? 0, tile), board, getMeta: true);
       if (meta.promotion) {
         appModel.requestPromotion();
       }
@@ -179,7 +182,8 @@ class ChessGame extends Game with TapDetector {
   }
 
   void redoMove() {
-    _moveCompletion(pushMSO(board.redoStack.removeLast(), board), clearRedo: false);
+    _moveCompletion(pushMSO(board.redoStack.removeLast(), board),
+        clearRedo: false);
   }
 
   void redoTwoMoves() {
@@ -237,14 +241,36 @@ class ChessGame extends Game with TapDetector {
     if (appModel.isAIsTurn && clearRedo && changeTurn) {
       _aiMove();
     }
+    notifyServer(meta);
+  }
+
+  void _listenPlayer2Move() {
+    FirebaseDatabase.instance.ref(appModel.sessionId).onValue.listen((e) {
+      final event = MoveMeta.fromJson(Map.castFrom(e.snapshot.value as Map));
+      if (event.move?.from != appModel.game?.latestMove?.from) {
+        validMoves = [];
+        var meta = push(event.move!, board, getMeta: true);
+        _moveCompletion(meta, changeTurn: !meta.promotion);
+        if (meta.promotion) {
+          promote(event.move!.promotionType);
+        }
+      }
+    });
+  }
+
+  void notifyServer(MoveMeta meta) async {
+    FirebaseDatabase.instance.ref(appModel.sessionId).set(meta.toJson());
   }
 
   int _vector2ToTile(Vector2 vector2) {
-    if (appModel.flip && appModel.playingWithAI && appModel.playerSide == Player.player2) {
+    if (appModel.flip &&
+        appModel.playingWithAI &&
+        appModel.playerSide == Player.player2) {
       return (7 - (vector2.y / (tileSize ?? 0)).floor()) * 8 +
           (7 - (vector2.x / (tileSize ?? 0)).floor());
     } else {
-      return (vector2.y / (tileSize ?? 0)).floor() * 8 + (vector2.x / (tileSize ?? 0)).floor();
+      return (vector2.y / (tileSize ?? 0)).floor() * 8 +
+          (vector2.x / (tileSize ?? 0)).floor();
     }
   }
 

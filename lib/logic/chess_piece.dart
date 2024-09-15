@@ -1,7 +1,11 @@
 import 'package:en_passant/views/components/main_menu_view/game_options/side_picker.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'chess_piece.g.dart';
 
 enum ChessPieceType { pawn, rook, knight, bishop, king, queen, promotion }
 
+@JsonSerializable(explicitToJson: true, anyMap: true)
 class ChessPiece {
   int id;
   ChessPieceType type;
@@ -51,4 +55,9 @@ class ChessPiece {
   }
 
   ChessPiece(this.id, this.type, this.player, this.tile);
+
+  factory ChessPiece.fromJson(Map<String, dynamic> json) =>
+      _$ChessPieceFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ChessPieceToJson(this);
 }

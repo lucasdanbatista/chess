@@ -1,5 +1,7 @@
+import 'package:en_passant/firebase_options.dart';
 import 'package:en_passant/model/app_model.dart';
 import 'package:en_passant/views/main_menu_view.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flame/flame.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -7,7 +9,9 @@ import 'package:provider/provider.dart';
 
 import 'logic/shared_functions.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     ChangeNotifierProvider(
       create: (context) => AppModel(),

@@ -1,0 +1,22 @@
+{
+  "flutter": {
+    "platforms": {
+      "ios": {
+        "default": {
+          "projectId": "caffeinestudio-chess",
+          "appId": "1:1063904952978:ios:82992a18b76e5d7c4e9c4b",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "caffeinestudio-chess",
+          "configurations": {
+            "ios": "1:1063904952978:ios:82992a18b76e5d7c4e9c4b"
+          }
+        }
+      }
+    }
+  }
+}
