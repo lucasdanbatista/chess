@@ -26,5 +26,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:1063904952978:ios:82992a18b76e5d7c4e9c4b</string>
+	<key>DATABASE_URL</key>
+	<string>https://caffeinestudio-chess-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

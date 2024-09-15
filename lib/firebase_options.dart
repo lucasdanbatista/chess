@@ -24,10 +24,7 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for android - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return android;
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
@@ -57,7 +54,18 @@ class DefaultFirebaseOptions {
     appId: '1:1063904952978:ios:82992a18b76e5d7c4e9c4b',
     messagingSenderId: '1063904952978',
     projectId: 'caffeinestudio-chess',
+    databaseURL: 'https://caffeinestudio-chess-default-rtdb.firebaseio.com',
     storageBucket: 'caffeinestudio-chess.appspot.com',
     iosBundleId: 'br.com.caffeinestudio.chess',
   );
+
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyCkHHpl-IlHOVC2ZNnJmReikcwxcipRI7g',
+    appId: '1:1063904952978:android:7106b88d339adfb54e9c4b',
+    messagingSenderId: '1063904952978',
+    projectId: 'caffeinestudio-chess',
+    databaseURL: 'https://caffeinestudio-chess-default-rtdb.firebaseio.com',
+    storageBucket: 'caffeinestudio-chess.appspot.com',
+  );
+
 }
