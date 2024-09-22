@@ -1,10 +1,9 @@
 import 'package:en_passant/game/app_model.dart';
-import 'package:flutter/cupertino.dart';
-
 import 'package:en_passant/views/components/main_menu_view/game_options/ai_difficulty_picker.dart';
 import 'package:en_passant/views/components/main_menu_view/game_options/game_mode_picker.dart';
 import 'package:en_passant/views/components/main_menu_view/game_options/side_picker.dart';
 import 'package:en_passant/views/components/main_menu_view/game_options/time_limit_picker.dart';
+import 'package:flutter/cupertino.dart';
 
 class GameOptions extends StatelessWidget {
   final AppModel appModel;
@@ -23,26 +22,28 @@ class GameOptions extends StatelessWidget {
             appModel.setPlayerCount,
           ),
           const SizedBox(height: 20),
-          appModel.playerCount == 1
-              ? Column(
-                  children: [
-                    AIDifficultyPicker(
-                      appModel.aiDifficulty,
-                      appModel.setAIDifficulty,
-                    ),
-                    const SizedBox(height: 20),
-                    SidePicker(
-                      appModel.selectedSide,
-                      appModel.setPlayerSide,
-                    ),
-                    const SizedBox(height: 20),
-                  ],
-                )
-              : Container(),
-          TimeLimitPicker(
-            selectedTime: appModel.timeLimit,
-            setTime: appModel.setTimeLimit,
+          Column(
+            children: [
+              if (appModel.playerCount == 1)
+                AIDifficultyPicker(
+                  appModel.aiDifficulty,
+                  appModel.setAIDifficulty,
+                ),
+              const SizedBox(height: 20),
+              if (appModel.playerCount != 2)
+                SidePicker(
+                  appModel.selectedSide,
+                  appModel.setPlayerSide,
+                  showRandom: !appModel.isOnline,
+                ),
+              const SizedBox(height: 20),
+            ],
           ),
+          if (appModel.playerCount == 1)
+            TimeLimitPicker(
+              selectedTime: appModel.timeLimit,
+              setTime: appModel.setTimeLimit,
+            ),
         ],
       ),
     );

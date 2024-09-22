@@ -7,6 +7,7 @@ import 'package:en_passant/game/app_themes.dart';
 import 'package:en_passant/game/chess_game.dart';
 import 'package:en_passant/game/chess_theme.dart';
 import 'package:en_passant/views/components/main_menu_view/game_options/side_picker.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,6 +26,7 @@ class AppModel extends ChangeNotifier {
   bool soundEnabled = true;
   bool showHints = true;
   bool flip = true;
+  bool isOnline = false;
 
   ChessGame? game;
   Timer? timer;
@@ -64,7 +66,8 @@ class AppModel extends ChangeNotifier {
 
   Player get adversary => Board.oppositePlayer(playerSide);
 
-  bool get isAdversaryTurn => playingWithAI && turn == adversary;
+  bool get isAdversaryTurn =>
+      (playingWithAI && turn == adversary) || (isOnline && turn == adversary);
 
   bool get playingWithAI => playerCount == 1;
 
@@ -73,6 +76,7 @@ class AppModel extends ChangeNotifier {
   }
 
   void newGame(BuildContext context, {bool notify = true}) {
+    FirebaseDatabase.instance.ref('1').remove();
     game?.cancelAIMove();
     timer?.cancel();
     gameOver = false;
@@ -141,6 +145,7 @@ class AppModel extends ChangeNotifier {
   }
 
   void setPlayerCount(int? count) {
+    isOnline = count == 3;
     if (count != null) {
       playerCount = count;
       notifyListeners();

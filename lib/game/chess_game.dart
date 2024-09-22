@@ -1,13 +1,17 @@
+import 'dart:async';
+
 import 'package:async/async.dart';
 import 'package:en_passant/entities/alpha_beta_pruning_move_evaluator.dart';
 import 'package:en_passant/entities/board.dart';
 import 'package:en_passant/entities/chess_piece.dart';
 import 'package:en_passant/entities/move.dart';
 import 'package:en_passant/entities/move_evaluator.dart';
+import 'package:en_passant/entities/move_event.dart';
 import 'package:en_passant/entities/move_meta.dart';
 import 'package:en_passant/game/app_model.dart';
 import 'package:en_passant/game/chess_piece_sprite.dart';
 import 'package:en_passant/views/components/main_menu_view/game_options/side_picker.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/cupertino.dart';
@@ -38,9 +42,23 @@ class ChessGame extends Game with TapDetector {
     if (appModel.isAdversaryTurn) {
       _aiMove();
     }
+    _listenServerEvents();
   }
 
   double get tileSize => screenWidth / 8;
+
+  void _listenServerEvents() async {
+    await FirebaseDatabase.instance.ref('1').remove();
+    FirebaseDatabase.instance.ref('1').onValue.listen((db) {
+      if (db.snapshot.value == null) return;
+      final event = MoveEvent.fromJson(db.snapshot.value as Map);
+      if (event.player != appModel.turn) return;
+      final piece = board.tiles[event.from]!;
+      appModel.turn = event.player;
+      _selectPiece(piece);
+      _movePiece(event.to);
+    });
+  }
 
   @override
   void onTapDown(TapDownInfo info) {
@@ -132,6 +150,7 @@ class ChessGame extends Game with TapDetector {
   }
 
   void _aiMove() async {
+    if(appModel.isOnline) return;
     await Future.delayed(const Duration(milliseconds: 500));
     var args = <String, dynamic>{
       'player': appModel.adversary,
@@ -268,6 +287,13 @@ class ChessGame extends Game with TapDetector {
     if (appModel.isAdversaryTurn && clearRedo && changeTurn) {
       _aiMove();
     }
+    FirebaseDatabase.instance.ref('1').set(
+          MoveEvent(
+            player: Board.oppositePlayer(appModel.turn),
+            from: meta.move!.from,
+            to: meta.move!.to,
+          ).toJson(),
+        );
   }
 
   int _vector2ToTile(Vector2 vector2) {
